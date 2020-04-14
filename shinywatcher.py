@@ -54,7 +54,7 @@ def get_cache():
 def check_shinies():
     cursor.execute(f"SELECT encounter_id, pokemon_id, disappear_time, individual_attack, individual_defense, individual_stamina, cp, longitude, latitude, t.worker FROM pokemon LEFT JOIN trs_stats_detect_raw t ON encounter_id = CAST(t.type_id AS UNSIGNED INTEGER) WHERE disappear_time > utc_timestamp() AND t.is_shiny = 1 {worker_filter} ORDER BY pokemon_id DESC, disappear_time DESC")
     results = cursor.fetchall()
-    for enc_id, mon_id, etime, atk, defe, sta, lon, lat, worker in results:
+    for enc_id, mon_id, etime, atk, defe, sta, cp, lon, lat, worker in results:
         if str(enc_id) in get_cache():
             continue
         if mon_id in config['mons']:
